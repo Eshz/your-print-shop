@@ -1,0 +1,5 @@
+import {NextResponse} from 'next/server';
+import {randomUUID} from 'node:crypto';
+import {normalizeImage,session,storage} from '@/lib/server';
+export const runtime='nodejs';
+export async function POST(req:Request){try{if(Number(req.headers.get('content-length'))>11_000_000)return NextResponse.json({error:'Please choose an image under 10 MB.'},{status:413});const form=await req.formData();const file=form.get('image');if(form.get('consent')!=='true')return NextResponse.json({error:'Permission is required.'},{status:400});if(!(file instanceof File)||!['image/jpeg','image/png','image/webp'].includes(file.type)||file.size>10_000_000||!file.size)return NextResponse.json({error:'Choose a JPG, PNG or WebP under 10 MB.'},{status:400});const data=await normalizeImage(Buffer.from(await file.arrayBuffer()));const id=randomUUID();await storage.put(await session(),id,data);return NextResponse.json({id,url:`/api/uploads/${id}`});}catch{return NextResponse.json({error:'We could not read that image. Try a different photo.'},{status:400});}}

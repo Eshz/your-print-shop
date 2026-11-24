@@ -1,0 +1,3 @@
+import {session,storage} from '@/lib/server';
+export async function GET(_:Request,{params}:{params:Promise<{id:string}>}){try{const {id}=await params;return new Response(new Uint8Array(await storage.get(await session(),id)),{headers:{'Content-Type':'image/jpeg','Cache-Control':'private, no-store','X-Content-Type-Options':'nosniff'}});}catch{return new Response('Not found',{status:404});}}
+export async function DELETE(_:Request,{params}:{params:Promise<{id:string}>}){try{await storage.delete(await session(),(await params).id);return new Response(null,{status:204});}catch{return new Response('Not found',{status:404});}}

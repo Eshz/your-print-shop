@@ -1,0 +1,3 @@
+import type {ProductId} from './products';
+export type OrderStatus='draft'|'awaiting_artwork_approval'|'awaiting_payment'|'paid'|'in_production'|'shipped'|'cancelled'|'refunded';
+export interface Order {id:string;ownerId:string;status:OrderStatus;paymentStatus:'unconfigured'|'pending'|'paid'|'failed'|'refunded';artworkStatus:'demo'|'pending_review'|'approved'|'rejected';items:{productId:ProductId;quantity:number;uploadId:string;variant:string;unitPrice:number}[];currency:'ILS';subtotal:number;discount:number;shipping:number;total:number;createdAt:string;updatedAt:string;deletedAt:string|null;providerReference:string|null;}

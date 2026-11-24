@@ -38,7 +38,7 @@ export function ProductStudio({result,initialProduct='stickers',lang='en',coupon
     <button className={`studio-select ${selected.includes(p.id)?'is-selected':''}`} aria-label={`${selected.includes(p.id)?(he?'הסרת':'Deselect'):(he?'בחירת':'Select')} ${he?p.he:p.name}`} aria-pressed={selected.includes(p.id)} onClick={()=>toggle(p.id)}>{selected.includes(p.id)&&<Check size={15}/>} {selected.includes(p.id)?(he?'נבחר':'Selected'):(he?'בחירה':'Select')}</button>
     <button className="studio-card-image" aria-label={`${he?'תצוגת':'Preview'} ${he?p.he:p.name}`} onClick={()=>{setActive(p.id);openPanel('preview');}}>{visual(p.id)}</button>
     <h3>{he?p.he:p.name}</h3><p>{p.detail}</p><b>{money(p.price)}</b>
-    
+
    </article>)}</div><button className="studio-scroll next" onClick={()=>move(1)} aria-label={he?'מתנות נוספות':'Next gifts'}><ChevronRight/></button></div>
   {needsSize&&<p className="studio-size-hint" role="status">{he?'בחרו מידה לפיג׳מה לפני ההוספה לסל.':'Choose a pajama size before adding to your bag.'}<button onClick={()=>{setActive('pajamas');openPanel('size');}}>{he?'בחירת מידה':'Choose size'}</button></p>}
   <nav className="studio-toolbar" aria-label={he?'התאמת המתנה':'Gift adjustments'}>{[

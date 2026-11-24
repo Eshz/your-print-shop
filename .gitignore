@@ -2,7 +2,16 @@ node_modules
 .next
 .env*
 !.env.example
-.private
+.private/*
+!.private/showcase/
+.private/showcase/*
+!.private/showcase/stickers.png
+!.private/showcase/cushion.png
+!.private/showcase/collection.png
+!.private/showcase/concepts.png
+!.private/showcase/hero.png
+!.private/showcase/magnets.png
+!.private/showcase/cushion-front.png
 *.tsbuildinfo
 .DS_Store
 *.log

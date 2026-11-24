@@ -93,10 +93,12 @@ header nav{margin-inline-end:auto;gap:28px}
  [dir=rtl] .hero h1{line-height:1.16}
  .hero .intro{font-size:16px;line-height:1.55;max-width:345px;margin:20px auto 0}
  .hero-copy>.button{display:none}
- .hero-gallery{margin-top:46px;max-width:none;mask-image:none}
- .hero-gallery-row{gap:10px;left:50%;transform:translateX(-50%);min-width:0}
- .hero-example{width:152px;flex-basis:152px}.hero-example.tall{height:198px}.hero-example.square{height:152px}
- .hero-gallery-row-secondary{display:flex;margin-top:28px;left:calc(50% + 38px)}
+ .hero-gallery{width:100%;margin-top:32px;padding:0 16px;max-width:430px;mask-image:none}
+ .hero-gallery-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;width:100%;min-width:0;left:auto;transform:none}
+ .hero-gallery-row .hero-example:nth-child(n+4){display:none}
+ .hero-example,.hero-example.tall,.hero-example.square,.hero-example.landscape{width:100%;height:124px;aspect-ratio:auto;min-width:0;overflow:hidden;border-radius:10px;background:#f3eee7}
+ .hero-example img{width:100%;height:100%;object-fit:contain}
+ .hero-gallery-row-secondary{display:grid;margin-top:8px;left:auto}
  .sticky-cta{display:block;position:fixed;inset:auto 0 0;transform:none;width:100%;max-width:none;margin:0;padding:14px 16px calc(14px + env(safe-area-inset-bottom));border:0;border-radius:0;background:linear-gradient(transparent,#faf9f6 20%);backdrop-filter:none;box-shadow:none}
  .sticky-cta .button{width:100%;min-height:56px;border-radius:12px;font-size:17px;padding:14px 18px}
  footer{padding-bottom:110px}
@@ -105,6 +107,7 @@ header nav{margin-inline-end:auto;gap:28px}
 
 .hero-example{background:transparent;box-shadow:none}.hero-example.tall{height:auto;aspect-ratio:1055/1491}.hero-example.square{height:auto;aspect-ratio:1}.hero-example.landscape{height:auto;aspect-ratio:4/3}.hero-example img{height:100%;object-fit:contain}
 @media(max-width:360px){header{padding-inline:12px;gap:10px}header .logo{font-size:1.35rem;gap:4px}header .logo-mark{font-size:1.8rem}.header-actions{gap:12px}.language{font-size:.7rem}}
+@media(max-width:360px){.hero{padding-top:24px}.hero-copy{padding-inline:16px}.hero h1{font-size:30px}.hero .intro{font-size:15px;margin-top:16px}.hero-gallery{margin-top:26px;padding-inline:12px}.hero-example,.hero-example.tall,.hero-example.square,.hero-example.landscape{height:108px}}
 /* Homepage hierarchy: designs, process, product formats, gift occasions, FAQ. */
 .home-section{max-width:none;padding:100px max(24px,calc((100vw - 1120px)/2));background:#fff}
 .home-section-heading{text-align:center;max-width:760px;margin:0 auto 56px}

@@ -9,7 +9,7 @@ import type {TemplateId} from '@/lib/templates';
 
 type Props={lang:'en'|'he';showcaseEnabled:boolean;templateId:TemplateId;onTemplate:(id:TemplateId)=>void;onStart:(id?:ProductId)=>void};
 function Example({asset,alt,enabled}:{asset:string;alt:string;enabled:boolean}) {
-  return enabled?<img src={`/api/showcase/${asset}`} alt={alt} loading="lazy"/>:<div className="home-image-placeholder"><Palette size={44}/><span>Your drawing here</span></div>;
+  return enabled?<img src={`/showcase/${asset}.png`} alt={alt} loading="lazy"/>:<div className="home-image-placeholder"><Palette size={44}/><span>Your drawing here</span></div>;
 }
 export function HomeSections({lang,showcaseEnabled,templateId,onTemplate,onStart}:Props){
   return localize(<>

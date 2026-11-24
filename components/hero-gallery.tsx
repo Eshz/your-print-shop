@@ -13,12 +13,12 @@ export function HeroGallery({showcaseEnabled}:{showcaseEnabled:boolean}) {
   return <div className="hero-gallery" aria-label="Gift ideas made from one drawing">
     <div className="hero-gallery-row">
       {examples.map((example,i)=><div className={`hero-example ${example.shape}`} key={`${example.asset}-${i}`}>
-        {showcaseEnabled?<img src={`/api/showcase/${example.asset}`} alt={example.alt} fetchPriority={i===2?'high':undefined}/>:<div className="hero-example-empty"><Palette size={40}/><span>Your drawing here</span></div>}
+        {showcaseEnabled?<img src={`/showcase/${example.asset}.png`} alt={example.alt} fetchPriority={i===2?'high':undefined}/>:<div className="hero-example-empty"><Palette size={40}/><span>Your drawing here</span></div>}
       </div>)}
     </div>
     <div className="hero-gallery-row hero-gallery-row-secondary" aria-hidden="true">
       {[examples[2],examples[0],examples[1],examples[4]].map((example,i)=><div className={`hero-example ${example.shape}`} key={`${example.asset}-${i}`}>
-        {showcaseEnabled?<img src={`/api/showcase/${example.asset}`} alt=""/>:<div className="hero-example-empty"><Palette size={40}/></div>}
+        {showcaseEnabled?<img src={`/showcase/${example.asset}.png`} alt=""/>:<div className="hero-example-empty"><Palette size={40}/></div>}
       </div>)}
     </div>
   </div>;

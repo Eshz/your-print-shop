@@ -1,4 +1,0 @@
-import {readFile} from 'node:fs/promises';
-import path from 'node:path';
-// User-supplied concept references are local-only, never public production assets.
-export async function GET(_:Request,{params}:{params:Promise<{name:string}>}){if(process.env.NODE_ENV!=='development')return new Response('Not found',{status:404});const {name}=await params;if(!['stickers','cushion','collection','concepts','hero','magnets','cushion-front'].includes(name))return new Response('Not found',{status:404});try{return new Response(new Uint8Array(await readFile(path.join(process.cwd(),'.private','showcase',name+'.png'))),{headers:{'Content-Type':'image/png','Cache-Control':'private, no-store','X-Content-Type-Options':'nosniff','X-Robots-Tag':'noindex, noimageindex'}});}catch{return new Response('Not found',{status:404});}}

@@ -49,7 +49,7 @@ Validated lint, production compilation and TypeScript, three catalogue/pricing t
 
 The journey now starts with `lib/templates.ts`: drawing-first sticker, shaped-cushion and storytelling templates. Each configuration supplies a product, name, description and preservation direction for the swappable generation adapter. The demo does not claim it has extracted characters, created new expressions or produced a finished manufacturing file.
 
-The four supplied mockup/concept references are stored in `.private/showcase/` (`stickers.png`, `cushion.png`, `collection.png`, `concepts.png`). A development-only `/api/showcase/:name` route serves allowlisted files with private/no-store/noindex headers. It returns 404 in production; these images are committed reference assets but are not served as public production media. They illustrate intended transformations, not results from the current upload. The attachments contain product concepts rather than a standalone source drawing.
+The four supplied mockup/concept references are stored in `public/showcase/` (`stickers.png`, `cushion.png`, `collection.png`, `concepts.png`) and are served as approved marketing assets in development and production. They illustrate intended transformations, not results from the current upload. The attachments contain product concepts rather than a standalone source drawing.
 
 `POST /api/validation` checks session ownership and calls the `DrawingValidator` abstraction. `DRAWING_VALIDATION_URL` must be an HTTPS endpoint; `DRAWING_VALIDATION_KEY` is sent only as a server-side Bearer token. Its JSON request contains `image: { mimeType: "image/jpeg", base64: "..." }`, `task: "classify_child_drawing"` and the classification instructions. Its response must be `{ kind: "drawing" | "not_drawing" | "uncertain", confidence: 0..1, issue?: "no_drawing" | "blurry" | "too_dark" | "cropped" | "multiple_pages" }`. No recognition provider is configured by default and no external image request is made without both settings. Use only a contracted, private provider with no training and appropriate deletion/retention terms.
 
@@ -69,7 +69,7 @@ The revised 390px flow was also exercised in the browser with a synthetic image:
 
 Upright, single-color headings; shorter hero/section copy; annotation-free hero; complete mobile template rows; fewer product badges. The placeholder before/after section appears only after a real upload exists. Product examples use contain-fit layouts and safe margins. Tested at 320px/390px and in Hebrew RTL.
 
-The three marketing concepts from the supplied artwork are stored at `.private/showcase/hero.png`, `.private/showcase/magnets.png` and `.private/showcase/cushion-front.png`. They are labelled concept examples and remain development-only; they are not live generation results. Original supplied files were preserved.
+The three marketing concepts from the supplied artwork are stored at `public/showcase/hero.png`, `public/showcase/magnets.png` and `public/showcase/cushion-front.png`. They are labelled concept examples; they are not live generation results. Original supplied files were preserved.
 
 ### Processing video
 
@@ -89,4 +89,4 @@ The editor offers existing HELLO10 (10% off) after 1.4 seconds of idle viewing, 
 
 ### Local media and Git
 
-The seven approved concept images live in `.private/showcase/` inside this project (approximately 16 MB) and are committed explicitly by filename. Other files under `.private`, private customer uploads, and real environment files remain ignored by Git. `public/` contains no media; local concept images are served only in development through `/api/showcase/*`. Do not commit other content from `.private`. The optional customer video is not bundled and requires an owned file or configured URL.
+The seven approved concept images live in `public/showcase/` inside this project (approximately 16 MB) and are committed for production delivery. Private customer uploads, other files under `.private`, and real environment files remain ignored by Git. The optional customer video is not bundled and requires an owned file or configured URL.

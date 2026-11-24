@@ -86,3 +86,7 @@ After a ready result, the reveal shows one large private mockup and leads to the
 The floating toolbar opens visual size, background, border and preview panels. Background/border apply across the gallery; only existing catalogue sizes are offered, and pajamas require an age size before adding. One selection per product is added to the bag; quantities can be changed there. Selected customization is preserved in each item's variant and customization data.
 
 The editor offers existing HELLO10 (10% off) after 1.4 seconds of idle viewing, once per session. Starting edits suppresses the interruption. Dismissal is remembered. Claiming applies the code to the shared cart; no email is collected or sent and no expiry is invented. The development-only `/qa/product-flow` route uses labelled supplied concept imagery to review reveal, selection, visual controls and discount behavior without uploading or placing orders.
+
+### Local media and Git
+
+The supplied and generated concept images currently live in `.private/showcase/` inside this project (approximately 16 MB). This directory, private customer uploads, and real environment files are intentionally ignored by Git. `public/` currently contains no media. A fresh clone therefore starts with layout placeholders until approved marketing assets are installed separately; local concept images are served only in development through `/api/showcase/*`. Do not commit the entire `.private` directory. The optional customer video is not bundled and requires an owned file or configured URL.

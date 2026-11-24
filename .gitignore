@@ -1,7 +1,8 @@
-node_modules/
-.next/
-.private/
+node_modules
+.next
 .env*
 !.env.example
+.private
+*.tsbuildinfo
 .DS_Store
 *.log

@@ -14,6 +14,10 @@ try{
  assert.equal((await post('/api/jobs',{uploadId:id,templateId:'sticker-universe'})).status,422);
  assert.equal((await post('/api/jobs',{uploadId:id,templateId:'unknown',unverifiedDemo:true})).status,400);
  const preview=await post('/api/jobs',{uploadId:id,templateId:'hug-my-drawing',unverifiedDemo:true});assert.equal(preview.status,200);const result=await preview.json();assert.equal(result.job.status,'demo_ready');assert.equal(result.job.templateId,'hug-my-drawing');assert.equal(result.mockup.productId,'cushion');
+ const mug=await post('/api/jobs',{uploadId:id,templateId:'sticker-universe',productId:'ceramic-mug',unverifiedDemo:true});
+ assert.equal(mug.status,200);
+ assert.equal((await mug.json()).mockup.productId,'ceramic-mug');
+ assert.equal((await post('/api/jobs',{uploadId:id,templateId:'sticker-universe',productId:'unknown',unverifiedDemo:true})).status,400);
  assert.equal((await fetch(base+'/api/orders',{method:'POST'})).status,503);
  console.log('PASS: consent, ownership, normalized private image, unconfigured check, explicit demo gate, template validation, checkout guard');
 }finally{assert.equal((await fetch(base+url,{method:'DELETE',headers:{cookie}})).status,204);assert.equal((await fetch(base+url,{headers:{cookie}})).status,404);console.log('PASS: synthetic upload deleted');}

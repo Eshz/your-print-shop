@@ -227,3 +227,22 @@ header nav{margin-inline-end:auto;gap:28px}
 .studio-size-options>button:nth-child(1) svg{width:28px;height:28px}.studio-size-options>button:nth-child(3) svg{width:42px;height:42px}.studio-size-options>button:nth-child(4) svg{width:48px;height:48px}
 [dir=rtl] .studio-scroll.previous{left:auto;right:12px}[dir=rtl] .studio-scroll.next{right:auto;left:12px}[dir=rtl] .studio-scroll svg{transform:rotate(180deg)}
 @media(max-width:700px){[dir=rtl] .studio-scroll.previous{right:5px}[dir=rtl] .studio-scroll.next{left:5px}}
+
+.catalog-groups { margin-top: 2rem; border-top: 1px solid #d9ded3; }
+.catalog-group { border-bottom: 1px solid #d9ded3; }
+.catalog-group summary { cursor: pointer; padding: 1rem 0; font-size: 1.2rem; font-weight: 600; }
+.catalog-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(min(100%,190px),1fr)); gap: 1.2rem; padding-bottom: 2rem; }
+.catalog-grid button { display: flex; flex-direction: column; gap: .35rem; text-align: start; align-items: flex-start; }
+.catalog-grid img { width: 100%; height: auto; border-radius: 12px; margin-bottom: .35rem; background: #f7f4ea; }
+.catalog-grid span { font-weight: 600; line-height: 1.3; }
+.catalog-grid strong { font-weight: 400; }
+@media(max-width:600px) { .catalog-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1rem .75rem; } }
+.catalog-proof { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); align-items: center; gap: .5rem; padding: .75rem; height: 100%; }
+.catalog-proof figure { margin: 0; min-width: 0; }
+.catalog-proof figure img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: contain; border-radius: 8px; }
+.catalog-proof figcaption { font-size: .85rem; text-align: center; padding-top: .4rem; }
+.catalog-group summary { display: flex; align-items: center; gap: 1rem; list-style: none; }
+.catalog-group summary::-webkit-details-marker { display: none; }
+.catalog-group summary img { width: 4.5rem; height: 4.5rem; border-radius: .65rem; }
+.catalog-group summary::after { content: '+'; margin-inline-start: auto; font-size: 1.4rem; }
+.catalog-group[open] summary::after { content: '−'; }

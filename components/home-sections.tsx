@@ -4,7 +4,8 @@ import {Check,ImagePlus,Palette,Upload} from 'lucide-react';
 import {Button} from './ui/button';
 import {TemplatePicker} from './template-picker';
 import {localize} from '@/lib/i18n';
-import {products,money,type ProductId} from '@/lib/products';
+import {collection,giftGroups,collectionImage} from '@/lib/collection';
+import {originalProducts as products,money,type ProductId} from '@/lib/products';
 import type {TemplateId} from '@/lib/templates';
 
 type Props={lang:'en'|'he';showcaseEnabled:boolean;templateId:TemplateId;onTemplate:(id:TemplateId)=>void;onStart:(id?:ProductId)=>void};
@@ -31,6 +32,17 @@ export function HomeSections({lang,showcaseEnabled,templateId,onTemplate,onStart
         <button className={`format-visual format-${p.id}`} onClick={()=>onStart(p.id)} aria-label={`Create ${p.name}`}><Example asset={p.id==='stickers'?'stickers':'magnets'} alt={`Drawing-based ${p.name} concept`} enabled={showcaseEnabled}/></button>
         <div className="format-content"><div className="format-title"><h3>{lang==='he'?p.he:p.name}</h3><span>{money(p.price)}</span></div><p>{p.detail}</p><Button onClick={()=>onStart(p.id)}>{p.id==='stickers'?'Make their stickers':'Make their story kit'}</Button></div>
       </article>)}</div>
+      <div className="catalog-groups">{giftGroups.map(group =>
+        <details className="catalog-group" key={group.en}>
+          <summary><img src={collectionImage(group.cover)} width={80} height={80} loading="lazy" alt=""/><span>{lang==='he'?group.he:group.en}</span></summary>
+          <div className="catalog-grid">{collection.filter(p => p.group===group.en).map(p =>
+            <button type="button" key={p.id} onClick={()=>onStart(p.id)}>
+              <img src={collectionImage(p.id)} width={640} height={640} loading="lazy" decoding="async" alt=""/>
+              <span>{lang==='he'?p.he:p.name}</span><strong>{money(p.price)}</strong>
+            </button>
+          )}</div>
+        </details>
+      )}</div>
       <details className="more-gifts"><summary>More gifts</summary><div className="other-gifts">{products.slice(2).map(p=><button key={p.id} onClick={()=>onStart(p.id)}><span><b>{lang==='he'?p.he:p.name}</b><span>{p.detail}</span></span><strong>{money(p.price)}</strong></button>)}</div></details>
     </section>
     <section className="section home-section home-moments" id="gift-ideas">

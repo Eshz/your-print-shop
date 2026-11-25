@@ -33,6 +33,14 @@ The supplied attachments are product-concept references, not a standalone origin
 
 ## Before accepting real orders
 
+### Optional AI artwork
+
+For a local trial, set `ARTWORK_PROVIDER=openai`, `OPENAI_API_KEY`, and both existing drawing-validator settings. The upload screen offers a separate opt-in to send the drawing to OpenAI. Only a verified drawing can use generation. The result is a downloadable transparent PNG for the selected sticker, cushion, or magnetic-story template and is accessible through the same private session. Deleting the drawing also removes its generated PNG. The gift gallery continues to preview the original drawing.
+
+The 40 additional catalog gifts use a 2048 × 2048 px master motif for print review. Engraved products request monochrome linework. Catalog photos are generated product examples.
+
+Sticker output is a 1760 × 2480 px portrait sheet, cushion output is 2048 × 2048 px, and magnetic pieces use 2048 × 1536 px. Review the artwork with the printer for final dimensions, cut paths, bleed, and color requirements. Before enabling the paid API on a public deployment, configure persistent private storage, retention, and generation quotas. The current filesystem adapter is for local use.
+
 This is a working local demo with a production-oriented separation of concerns, **not a live commerce backend**. Replace local storage with private encrypted object storage and signed, owner-checked reads. Add durable database sessions/auth, job queue and status polling, rate limiting, proxy-level request-body limits, abuse monitoring, scheduled retention/deletion, database-backed orders and webhook-verified payments. Local session lasts 24 hours; local files currently require explicit deletion or operator cleanup and are not automatically purged. Do not deploy the local filesystem adapter to ephemeral/serverless hosts or serve `.private` through a web server.
 
 Implement provider calls only on the server using environment secrets. Forward artwork only to a contracted provider after informed consent, with training disabled and a retention agreement. Keep originals immutable and connect generated assets to ownership and deletion records. Retrying queues/webhooks needs idempotency. Never trust client prices, variants, coupons or payment success. Validate delivery details server-side, calculate totals server-side and only mark paid after a signed provider webhook. Review Hebrew translations, legal/privacy/returns policies, product safety and fulfilment integration, operator access controls and monitoring before launch. No analytics or ad network is installed; campaign offer is first-party UI.

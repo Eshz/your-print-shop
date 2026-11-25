@@ -1,7 +1,7 @@
 import 'server-only';
 import {cookies} from 'next/headers';
 import {randomUUID} from 'node:crypto';
-import {mkdir,writeFile,readFile,unlink} from 'node:fs/promises';
+import {mkdir,writeFile,readFile,unlink,rename} from 'node:fs/promises';
 import path from 'node:path';
 import sharp from 'sharp';
 import type {templates} from './templates';
@@ -18,6 +18,30 @@ export interface ArtworkProvider {generate(uploadId:string,template:DrawingTempl
 export const artworkProvider:ArtworkProvider={async generate(uploadId,template){return {id:randomUUID(),uploadId,templateId:template.id,status:'demo_ready',provider:'original-drawing-demo',createdAt:new Date().toISOString()};}};
 export interface MockupRenderer {render(uploadId:string,productId:string):{imageUrl:string;productId:string;demo:boolean}}
 export const mockupRenderer:MockupRenderer={render:(id,productId)=>({imageUrl:`/api/uploads/${id}`,productId,demo:true})};
+
+const artworkPath=(owner:string,id:string)=>path.join(root,safe(owner),safe(id)+'.artwork.png');
+async function removeIfPresent(file:string){
+  try{await unlink(file);}catch(error){if((error as NodeJS.ErrnoException).code!=='ENOENT')throw error;}
+}
+export async function deleteDrawing(owner:string,id:string){
+  await storage.delete(owner,id);
+  await removeIfPresent(artworkPath(owner,id));
+}
+export async function readArtwork(owner:string,id:string){
+  await storage.get(owner,id);
+  return readFile(artworkPath(owner,id));
+}
+export async function saveArtwork(owner:string,id:string,image:Buffer,signal:AbortSignal){
+  const target=artworkPath(owner,id);
+  const temporary=target+'.'+randomUUID();
+  try{
+    await writeFile(temporary,image,{mode:0o600});
+    signal.throwIfAborted();
+    await storage.get(owner,id);
+    await rename(temporary,target);
+    try{await storage.get(owner,id);}catch(error){await removeIfPresent(target);throw error;}
+  }finally{await removeIfPresent(temporary);}
+}
 
 // Cache only actual vision decisions for immutable uploads; outages/unconfigured results stay retryable.
 export async function validateUpload(owner:string,id:string){

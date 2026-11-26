@@ -340,3 +340,17 @@ header nav{margin-inline-end:auto;gap:28px}
   .sticky-cta .hero-benefits svg { width: 17px; height: 17px; }
   footer { padding-bottom: calc(155px + env(safe-area-inset-bottom)); }
 }
+
+.design-tile-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 3vw, 36px); }
+.design-tile { display: block; width: 100%; min-width: 0; padding: 0; text-align: start; }
+.design-tile img, .design-tile-placeholder {
+  display: block; width: 100%; height: auto; aspect-ratio: 1; border-radius: 12px;
+}
+.design-tile-placeholder { display: grid; place-items: center; background: #f5ecdf; }
+.design-tile-footer { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding-top: 14px; }
+.design-tile-footer strong { font-size: clamp(16px, 1.6vw, 22px); line-height: 1.2; }
+.design-tile-action { flex: none; border-radius: 999px; background: var(--yellow); color: var(--ink); padding: 8px 20px; font-weight: 700; }
+.design-tile:hover .design-tile-action, .design-tile:focus-visible .design-tile-action { background: #f4c850; }
+@media (max-width: 700px) {
+  .design-tile-grid { grid-template-columns: 1fr; gap: 28px; }
+}

@@ -1,5 +1,38 @@
 'use client';
 /* eslint-disable @next/next/no-img-element */
-import {Check,Palette} from 'lucide-react';
-import {templates,type TemplateId} from '@/lib/templates';
-export function TemplatePicker({selected,onSelect,lang='en',showcaseEnabled=false,compact=false}:{selected:TemplateId;onSelect:(id:TemplateId)=>void;lang?:'en'|'he';showcaseEnabled?:boolean;compact?:boolean}){return <div className={`template-grid ${compact?'compact-templates':''}`} role="group" aria-label={lang==='he'?'תבניות מציורי ילדים':'Templates made from children’s drawings'}>{templates.map(t=><button key={t.id} className={`template-card ${selected===t.id?'selected':''}`} aria-pressed={selected===t.id} onClick={()=>onSelect(t.id)}><div className={`template-image ${t.color}`}>{showcaseEnabled?<img src={`/catalog/${t.sample}.webp`} alt={lang==='he'?`דוגמת קונספט: ${t.he}`:`Product example: ${t.name}`}/>:<div className="template-empty"><Palette/><span>{lang==='he'?'הציור שלכם כאן':'Your drawing belongs here'}</span></div>}<span className="template-check">{selected===t.id?<Check size={17}/>:null}</span></div><div className="template-description"><h3>{lang==='he'?t.he:t.name}</h3><p>{lang==='he'?t.benefitHe:t.benefit}</p></div></button>)}</div>;}
+import {Palette} from 'lucide-react';
+import {templates, type TemplateId} from '@/lib/templates';
+
+type Props = {
+  selected: TemplateId;
+  onSelect: (id: TemplateId) => void;
+  lang?: 'en' | 'he';
+  showcaseEnabled?: boolean;
+  compact?: boolean;
+};
+
+export function TemplatePicker({selected, onSelect, lang='en', showcaseEnabled=false, compact=false}: Props) {
+  const hebrew = lang === 'he';
+  return <div className={compact ? 'template-grid compact-templates' : 'design-tile-grid'}
+    role="group" aria-label={hebrew ? 'עיצובים מציורי ילדים' : 'Designs made from children’s drawings'}>
+    {templates.map(template => {
+      const name = hebrew ? template.he : template.name;
+      if (compact) return <button key={template.id} type="button"
+        className={`template-card ${selected === template.id ? 'selected' : ''}`}
+        aria-pressed={selected === template.id} onClick={() => onSelect(template.id)}>
+        <span>{name}</span>
+      </button>;
+
+      return <button key={template.id} className="design-tile" type="button"
+        aria-label={hebrew ? `יצירת ${name}` : `Create ${name}`} onClick={() => onSelect(template.id)}>
+        {showcaseEnabled
+          ? <img src={`/catalog/${template.sample}.webp`} width={640} height={640} loading="lazy" alt=""/>
+          : <span className="design-tile-placeholder"><Palette aria-hidden="true"/></span>}
+        <span className="design-tile-footer">
+          <strong>{name}</strong>
+          <span className="design-tile-action">{hebrew ? 'ליצירה' : 'Create'}</span>
+        </span>
+      </button>;
+    })}
+  </div>;
+}

@@ -17,7 +17,12 @@ const formats = {
     size: '2048x1536',
     layout: 'Landscape sheet of separate, evenly spaced magnetic story pieces. Leave room between pieces and omit the board.',
   },
-} satisfies Record<Template['id'], {size: string; layout: string}>;
+} as const;
+
+function legacyFormat(id: Template['id']) {
+  if (id === 'sticker-universe' || id === 'hug-my-drawing' || id === 'story-world') return formats[id];
+  throw new Error('Unknown artwork format');
+}
 
 export function generationEnabled() {
   return process.env.ARTWORK_PROVIDER === 'openai' &&
@@ -29,7 +34,7 @@ export async function generateArtwork(drawing: Buffer, template: Template, signa
   const {size, layout} = gift ? {
     size: '2048x2048',
     layout: `Create one centered motif for a ${gift.name}. Leave a generous transparent margin. For engraving use monochrome strokes, and for embroidery simplify fine details. Render the flat design only.`,
-  } : formats[template.id];
+  } : legacyFormat(template.id);
   const body = new FormData();
   body.set('image', new Blob([new Uint8Array(drawing)], {type: 'image/jpeg'}), 'drawing.jpg');
   body.set('model', 'gpt-image-2.5-sunburst');

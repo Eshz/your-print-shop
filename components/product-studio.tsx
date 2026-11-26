@@ -18,7 +18,7 @@ function sizeOptions(id:ProductId) {
  if(id==='adult-tee'||id==='crewneck'||id==='hoodie')return ['XS','S','M','L','XL','2XL'];
  return [];
 }
-export function ProductStudio({result,initialProduct='stickers',lang='en',coupon='',onCoupon,onAdd,onBack,initialDraft,onDraftChange,offerKey='lm-product-offer-seen'}:{result:PreviewResult;initialProduct?:ProductId;lang?:'en'|'he';coupon?:string;onCoupon:()=>void;onAdd:(items:GiftSelection[])=>void;onBack:()=>void;initialDraft?:GiftStudioDraft|null;onDraftChange?:(draft:GiftStudioDraft)=>void;offerKey?:string}){
+export function ProductStudio({result,initialProduct='ceramic-mug',lang='en',coupon='',onCoupon,onAdd,onBack,initialDraft,onDraftChange,offerKey='lm-product-offer-seen'}:{result:PreviewResult;initialProduct?:ProductId;lang?:'en'|'he';coupon?:string;onCoupon:()=>void;onAdd:(items:GiftSelection[])=>void;onBack:()=>void;initialDraft?:GiftStudioDraft|null;onDraftChange?:(draft:GiftStudioDraft)=>void;offerKey?:string}){
  const he=lang==='he',gallery=useRef<HTMLDivElement>(null),heading=useRef<HTMLHeadingElement>(null),opener=useRef<HTMLElement|null>(null),interacted=useRef(false);
  const [selected,setSelected]=useState<ProductId[]>(initialDraft?.selected||[initialProduct]),[active,setActive]=useState<ProductId>(initialDraft?.active||initialProduct),[panel,setPanel]=useState<Panel>(null),[offer,setOffer]=useState(false);
  const [appearance,setAppearance]=useState<ArtworkAppearance>(initialDraft?.appearance||{background:'#fffef9',border:3});
@@ -41,7 +41,7 @@ export function ProductStudio({result,initialProduct='stickers',lang='en',coupon
   <p className="studio-subtitle">{result.demo?(he?'הדמיות עם התמונה המקורית.':'Demo layouts using your original photo.'):(he?'העיצוב שבחרתם, על המתנות שלהם.':'Your chosen artwork, on their gifts.')}</p>
   {coupon&&<p className="studio-coupon"><Check size={14}/>{he?'הנחת 10% נוספה':'10% off applied'}</p>}
   <div className="studio-gallery-wrap"><button className="studio-scroll previous" onClick={()=>move(-1)} aria-label={he?'מתנות קודמות':'Previous gifts'}><ChevronLeft/></button>
-   <div className="studio-gallery" ref={gallery}>{products.map(p=><article data-product={p.id} className={`studio-card ${active===p.id?'is-active':''}`} key={p.id}>
+   <div className="studio-gallery" ref={gallery}>{products.filter(p=>'group' in p).map(p=><article data-product={p.id} className={`studio-card ${active===p.id?'is-active':''}`} key={p.id}>
     <button className={`studio-select ${selected.includes(p.id)?'is-selected':''}`} aria-label={`${selected.includes(p.id)?(he?'הסרת':'Deselect'):(he?'בחירת':'Select')} ${he?p.he:p.name}`} aria-pressed={selected.includes(p.id)} onClick={()=>toggle(p.id)}>{selected.includes(p.id)&&<Check size={15}/>} {selected.includes(p.id)?(he?'נבחר':'Selected'):(he?'בחירה':'Select')}</button>
     <button className="studio-card-image" aria-label={`${he?'תצוגת':'Preview'} ${he?p.he:p.name}`} onClick={()=>{setActive(p.id);openPanel('preview');}}>{visual(p.id)}</button>
     <h3>{he?p.he:p.name}</h3><p>{p.detail}</p><b>{money(p.price)}</b>

@@ -18,7 +18,7 @@ Open http://127.0.0.1:3000. `npm run lint`, `npm test`, and `npm run build` vali
 
 Drawing template → consent/upload → private demo preview → product and finish/size → bag → coupon/quantity → order-detail form. HELLO10 discounts 10% (rounded to whole ILS); ₪29 delivery, free from ₪249 after discount. No invented reviews, countdowns, scarcity, automatic email capture, or simulated payment success. The offer can be dismissed. The bag is in memory for the current visit; it does not persist children's images to browser storage.
 
-The supplied attachments are product-concept references, not a standalone original drawing. These references are used only in local development; decorative symbols remain labelled layout examples. Upload the intended drawing to view it throughout the page and creator. Mockups preserve the uploaded image; they do not claim background removal, character extraction, or image generation. Product specifications and prices are proposed catalogue configuration, requiring merchant approval.
+The storefront uses the 40 generated product examples in `public/catalog/`. The hero displays two continuous, counter-moving rows, with a pause button and support for reduced motion. Upload the intended drawing to view it throughout the page and creator. Mockups preserve the uploaded image; they do not claim background removal, character extraction, or image generation. Product specifications and prices are proposed catalogue configuration, requiring merchant approval.
 
 ## Architecture
 
@@ -57,7 +57,6 @@ Validated lint, production compilation and TypeScript, three catalogue/pricing t
 
 The journey now starts with `lib/templates.ts`: drawing-first sticker, shaped-cushion and storytelling templates. Each configuration supplies a product, name, description and preservation direction for the swappable generation adapter. The demo does not claim it has extracted characters, created new expressions or produced a finished manufacturing file.
 
-The four supplied mockup/concept references are stored in `public/showcase/` (`stickers.png`, `cushion.png`, `collection.png`, `concepts.png`) and are served as approved marketing assets in development and production. They illustrate intended transformations, not results from the current upload. The attachments contain product concepts rather than a standalone source drawing.
 
 `POST /api/validation` checks session ownership and calls the `DrawingValidator` abstraction. `DRAWING_VALIDATION_URL` must be an HTTPS endpoint; `DRAWING_VALIDATION_KEY` is sent only as a server-side Bearer token. Its JSON request contains `image: { mimeType: "image/jpeg", base64: "..." }`, `task: "classify_child_drawing"` and the classification instructions. Its response must be `{ kind: "drawing" | "not_drawing" | "uncertain", confidence: 0..1, issue?: "no_drawing" | "blurry" | "too_dark" | "cropped" | "multiple_pages" }`. No recognition provider is configured by default and no external image request is made without both settings. Use only a contracted, private provider with no training and appropriate deletion/retention terms.
 
@@ -77,7 +76,6 @@ The revised 390px flow was also exercised in the browser with a synthetic image:
 
 Upright, single-color headings; shorter hero/section copy; annotation-free hero; complete mobile template rows; fewer product badges. The placeholder before/after section appears only after a real upload exists. Product examples use contain-fit layouts and safe margins. Tested at 320px/390px and in Hebrew RTL.
 
-The three marketing concepts from the supplied artwork are stored at `public/showcase/hero.png`, `public/showcase/magnets.png` and `public/showcase/cushion-front.png`. They are labelled concept examples; they are not live generation results. Original supplied files were preserved.
 
 ### Processing video
 
@@ -91,10 +89,10 @@ Set `PRODUCT_VIDEO_URL` to a rights-cleared customer how-to video (a public HTTP
 
 After a ready result, the reveal shows one large private mockup and leads to the gift gallery. Every product uses the chosen artwork. Current original-image mockups remain explicitly labelled demo layouts; they do not claim character extraction, generated variants or a manufacturing proof.
 
-The floating toolbar opens visual size, background, border and preview panels. Background/border apply across the gallery; only existing catalogue sizes are offered, and pajamas require an age size before adding. One selection per product is added to the bag; quantities can be changed there. Selected customization is preserved in each item's variant and customization data.
+The floating toolbar opens visual size, background, border and preview panels. Background/border apply across the gallery; only existing catalogue sizes are offered, and clothing requires a size before adding. One selection per product is added to the bag; quantities can be changed there. Selected customization is preserved in each item's variant and customization data.
 
-The editor offers existing HELLO10 (10% off) after 1.4 seconds of idle viewing, once per session. Starting edits suppresses the interruption. Dismissal is remembered. Claiming applies the code to the shared cart; no email is collected or sent and no expiry is invented. The development-only `/qa/product-flow` route uses labelled supplied concept imagery to review reveal, selection, visual controls and discount behavior without uploading or placing orders.
+The editor offers existing HELLO10 (10% off) after 1.4 seconds of idle viewing, once per session. Starting edits suppresses the interruption. Dismissal is remembered. Claiming applies the code to the shared cart; no email is collected or sent and no expiry is invented. The development-only `/qa/product-flow` route uses a labelled generated product example to review reveal, selection, visual controls and discount behavior without uploading or placing orders.
 
 ### Local media and Git
 
-The seven approved concept images live in `public/showcase/` inside this project (approximately 16 MB) and are committed for production delivery. Private customer uploads, other files under `.private`, and real environment files remain ignored by Git. The optional customer video is not bundled and requires an owned file or configured URL.
+Generated product photos live in `public/catalog/`. Customer uploads are private and excluded from Git.

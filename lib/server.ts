@@ -4,8 +4,8 @@ import {randomUUID} from 'node:crypto';
 import {mkdir,writeFile,readFile,unlink,rename} from 'node:fs/promises';
 import path from 'node:path';
 import sharp from 'sharp';
-import type {templates} from './templates';
-type DrawingTemplate=typeof templates[number];
+import type {findTemplate} from './templates';
+type DrawingTemplate=NonNullable<ReturnType<typeof findTemplate>>;
 const root=process.env.PRIVATE_STORAGE_PATH||path.join(process.cwd(),'.private');
 export async function session(){const c=await cookies();let id=c.get('lm_session')?.value;if(!id||!/^[a-f0-9-]{36}$/.test(id)){id=randomUUID();c.set('lm_session',id,{httpOnly:true,sameSite:'strict',secure:process.env.NODE_ENV==='production',maxAge:86400});}return id;}
 export interface PrivateStorage {put(owner:string,id:string,data:Buffer):Promise<void>;get(owner:string,id:string):Promise<Buffer>;delete(owner:string,id:string):Promise<void>}

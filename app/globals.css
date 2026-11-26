@@ -265,3 +265,56 @@ header nav{margin-inline-end:auto;gap:28px}
   .gift-marquee-track { animation: none; }
   .gift-marquee-control { display: none; }
 }
+
+.upload-example-motion {
+  position: relative;
+  display: block;
+  width: 104px;
+  height: 76px;
+  pointer-events: none;
+}
+.upload-example-paper {
+  position: absolute;
+  width: 45px;
+  height: 54px;
+  left: 30px;
+  top: 6px;
+  background: #fff9ed url('/catalog/art-print.webp') center / 144% auto no-repeat;
+  border: 2px solid #fffaf0;
+  border-radius: 2px;
+  box-shadow: 0 2px 5px #473b282b;
+  transform: rotate(-6deg);
+}
+.upload-example-tray {
+  position: absolute;
+  width: 70px;
+  height: 14px;
+  bottom: 8px;
+  left: 17px;
+  border: 2px solid var(--green);
+  border-top: 0;
+  border-radius: 0 0 9px 9px;
+  background: linear-gradient(transparent, #c8d5ba);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .upload-example-paper { animation: drawing-into-tray 2.4s ease-in-out 2; }
+  @keyframes drawing-into-tray {
+    0%, 100% { transform: rotate(-6deg); }
+    18% { transform: translate(-13px, -5px) rotate(-13deg); }
+    53%, 74% { transform: translate(0, 8px) rotate(0) scale(.88); }
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .create-item-screen .item-layout, .product-reveal, .product-studio,
+  .dialog-body.checkout, .dialog-body:has(.cart-line, .empty) {
+    animation: storefront-arrive 320ms cubic-bezier(.22, 1, .36, 1);
+  }
+  @keyframes storefront-arrive {
+    from { opacity: .4; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}

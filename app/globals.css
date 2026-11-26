@@ -318,3 +318,25 @@ header nav{margin-inline-end:auto;gap:28px}
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
 }
+
+.hero-benefits {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(16px, 3vw, 40px);
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 600;
+}
+.hero-benefits li { display: flex; align-items: center; gap: 8px; }
+.hero-benefits svg { width: 20px; height: 20px; flex: none; stroke-width: 1.7; }
+@media (max-width: 700px) {
+  .hero-copy .hero-benefits { display: none; }
+  .sticky-cta .hero-benefits { margin-top: 8px; gap: 16px; font-size: 12px; line-height: 1.2; text-align: center; }
+  .sticky-cta .hero-benefits li { flex-direction: column; gap: 3px; }
+  .sticky-cta .hero-benefits svg { width: 17px; height: 17px; }
+  footer { padding-bottom: calc(155px + env(safe-area-inset-bottom)); }
+}

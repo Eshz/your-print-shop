@@ -238,7 +238,16 @@ header nav{margin-inline-end:auto;gap:28px}
   width: min(100%, 1120px);
   margin: 52px auto 0;
 }
-.gift-marquee-window { overflow: hidden; direction: ltr; display: grid; gap: 52px; }
+.gift-marquee-window {
+  overflow: hidden;
+  direction: ltr;
+  display: grid;
+  gap: 52px;
+  --edge-fade: min(8%, 80px);
+  --gallery-mask: linear-gradient(to right, transparent, black var(--edge-fade), black calc(100% - var(--edge-fade)), transparent);
+  -webkit-mask-image: var(--gallery-mask);
+  mask-image: var(--gallery-mask);
+}
 .gift-marquee-track { display: flex; width: max-content; animation: gift-drift 70s linear infinite; }
 .gift-marquee-track:nth-child(2) { animation-direction: reverse; animation-delay: -3s; }
 .gift-marquee-set { display: flex; align-items: center; gap: var(--gutter); padding-right: var(--gutter); }
